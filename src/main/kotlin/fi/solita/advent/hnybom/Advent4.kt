@@ -19,9 +19,7 @@ data class Passport(val lines : List<String>) {
 class Advent4 {
 
     private val emptyLineRegex = "^\\s*\$".toRegex()
-
-    private val input = File("/home/henriny/work/own/advent/src/main/resources/input4.txt").readLines()
-
+    private val input = File("/home/henriny/work/AdventOfCode2020/src/main/resources/input4.txt").readLines()
 
     fun calculateAnswer() {
 
@@ -130,8 +128,6 @@ class Advent4 {
             return true
         }
 
-
-
         val requiredFields = mapOf(
                 "byr" to generateYearRangeValidator(1920, 2002),
                 "iyr" to generateYearRangeValidator(2010, 2020),
@@ -141,8 +137,7 @@ class Advent4 {
                 "ecl" to eyeColorValidator,
                 "pid" to pidValidator,
                 "cid" to cidValidator,
-
-                )
+        )
 
         val validPassports = passports.filter { p ->
             val fields = p.parameterMap()
