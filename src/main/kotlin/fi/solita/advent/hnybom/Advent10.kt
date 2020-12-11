@@ -1,8 +1,6 @@
 package fi.solita.advent.hnybom
 
 import java.io.File
-import kotlin.math.min
-import kotlin.math.pow
 
 class Advent10 {
 
@@ -28,13 +26,18 @@ class Advent10 {
     private fun calculateAnswer2() {
         val sortedInput = input.sorted()
         val sortedJolts = sortedInput + listOf(sortedInput.last() + 3)
-        val cache = mutableMapOf(0 to 1L)
 
-        sortedJolts.forEach {
-            cache[it] = (cache[it - 3] ?: 0L) + (cache[it - 2] ?: 0L) + (cache[it - 1] ?: 0L)
+        fun traversePaths(paths : Map<Int, Long>, adapters: List<Int>) : Long {
+            if(adapters.isEmpty()) return paths[sortedInput.last()] ?: 0
+            val adapter = adapters.first()
+            val adapterPaths = (paths[adapter -3]  ?: 0L) + (paths[adapter - 2]  ?: 0L) + (paths[adapter - 1]  ?: 0L)
+            val adapterVal = adapter to adapterPaths
+            return traversePaths(paths + adapterVal, adapters.drop(1))
         }
 
-        println("Permutations ${cache[sortedJolts.last()]}") //14173478093824
+        val result = traversePaths(mapOf(0 to 1L), sortedJolts)
+
+        println("Permutations $result") //14173478093824
 
     }
 }
